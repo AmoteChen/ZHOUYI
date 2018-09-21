@@ -18,6 +18,8 @@
         </activity>
         <activity android:name=".activity.Login" />
         <activity android:name=".activity.Register"></activity>
+        <activity android:name=".activity.mine.mine_main">
+        </activity>
     </application>
 
 </manifest>

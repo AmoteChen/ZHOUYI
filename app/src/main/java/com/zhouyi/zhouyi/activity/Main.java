@@ -1,11 +1,13 @@
 package com.zhouyi.zhouyi.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
 import com.zhouyi.zhouyi.R;
+import com.zhouyi.zhouyi.activity.mine.mine_main;
 
 public class Main extends AppCompatActivity implements View.OnClickListener {
 
@@ -34,6 +36,8 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             case R.id.main_bt_yi:
                 break;
             case R.id.main_bt_mine:
+                Intent to_mine=new Intent(this,mine_main.class);
+                startActivity(to_mine);
                 break;
             default:
                 break;
