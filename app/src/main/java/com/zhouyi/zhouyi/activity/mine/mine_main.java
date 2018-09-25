@@ -11,6 +11,8 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.zhouyi.zhouyi.R;
+import com.zhouyi.zhouyi.activity.Login;
+import com.zhouyi.zhouyi.activity.Register;
 
 import jp.wasabeef.glide.transformations.BlurTransformation;
 import jp.wasabeef.glide.transformations.CropCircleTransformation;
@@ -63,12 +65,14 @@ public class mine_main extends AppCompatActivity {
 
     public void onAvatar (View view){
         item_view.changeState();
-        reStartActivity();
+        Intent toLogin=new Intent(this, Login.class);
+        startActivity(toLogin);
+//        reStartActivity();
     }
-    private void reStartActivity() {
-        Intent intent = getIntent();
-        finish();
-        startActivity(intent);
-    }
+//    private void reStartActivity() {
+//        Intent intent = getIntent();
+//        finish();
+//        startActivity(intent);
+//    }
 
 }
