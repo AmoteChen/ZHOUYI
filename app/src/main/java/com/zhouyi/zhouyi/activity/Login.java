@@ -1,5 +1,6 @@
 package com.zhouyi.zhouyi.activity;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -7,6 +8,7 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import com.zhouyi.zhouyi.R;
+import com.zhouyi.zhouyi.activity.mine.mine_main;
 import com.zhouyi.zhouyi.object.HttpsConnect;
 import com.zhouyi.zhouyi.object.HttpsListener;
 
@@ -56,7 +58,10 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                 break;
         }
     }
-
+//    public void onLogin(View view){
+//        Intent backMine = new Intent(this,mine_main.class);
+//        startActivity(backMine);
+//    }
     private JSONObject getJsonData() {
         JSONObject jsonObject = new JSONObject();
         return jsonObject;
