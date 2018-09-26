@@ -17,9 +17,10 @@
             </intent-filter>
         </activity>
         <activity android:name=".activity.Login" />
-        <activity android:name=".activity.Register"></activity>
-        <activity android:name=".activity.mine.mine_main">
-        </activity>
+        <activity android:name=".activity.Register" />
+        <activity android:name=".activity.mine.mine_main" />
+        <activity android:name=".activity.DivinationInfo" />
+        <activity android:name=".activity.History"></activity>
     </application>
 
 </manifest>
