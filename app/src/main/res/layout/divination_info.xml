@@ -6,4 +6,10 @@
     android:layout_height="match_parent"
     tools:context=".activity.DivinationInfo">
 
+    <TextView
+        android:id="@+id/divination_info_tv_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="info"/>
+
 </android.support.constraint.ConstraintLayout>
