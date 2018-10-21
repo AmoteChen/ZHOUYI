@@ -9,9 +9,21 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import com.zhouyi.zhouyi.object.User;
+
 import javax.net.ssl.HttpsURLConnection;
 
 public class HttpsConnect {
+//
+//    public static String token;
+//
+//    public static void setToken(String token) {
+//        HttpsConnect.token = token;
+//    }
+//
+//    public static String getToken() {
+//        return HttpsConnect.token;
+//    }
 
     public static void sendRequest(
             final String address,
@@ -33,6 +45,7 @@ public class HttpsConnect {
                     connection.setDoOutput(true);
                     connection.setRequestProperty("Content-type", "application/json;charset=UTF-8");
                     connection.setRequestProperty("Accept", "application/json");
+                    connection.setRequestProperty("token", User.getToken());
 
                     DataOutputStream ostream = new DataOutputStream(connection.getOutputStream());
                     ostream.write(jsonData.toString().getBytes());

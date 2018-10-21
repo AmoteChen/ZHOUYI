@@ -51,9 +51,6 @@ public class item_view extends LinearLayout {
         initview();
     }
 
-    public static void changeState() {
-        item_view.LOGIN = true;
-    }
 
     public static void setState(boolean state) {
         item_view.LOGIN = state;

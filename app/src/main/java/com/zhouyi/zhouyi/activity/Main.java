@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.JsonReader;
 import android.view.View;
 import android.widget.Button;
 import android.widget.Toast;
@@ -15,6 +16,7 @@ import com.zhouyi.zhouyi.object.HttpsConnect;
 import com.zhouyi.zhouyi.object.HttpsListener;
 import com.zhouyi.zhouyi.object.User;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.zhouyi.zhouyi.activity.mine.item_view;
@@ -30,8 +32,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
     private String name;
     private String account;
     private String password;
+    private String token;
+    private String id;
     private boolean state;
 
+    private String check_address = "http://120.76.128.110:12510/web/CheckLogin";
     private String address = "http://120.76.128.110:12510/web/UserLogin";
 
     @Override
@@ -48,16 +53,26 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 
         sp = getSharedPreferences("user", Context.MODE_PRIVATE);
         name = sp.getString("name", "no name");
-        account = sp.getString("account", "no account");
+        account = sp.getString("account", "no acc");
         password = sp.getString("password", "no password");
+        token = sp.getString("token", "no token");
+        id = sp.getString("id", "-1");
         state = sp.getBoolean("state", false);
+
+        User.setName(name);
+        User.setAccount(account);
+        User.setPassword(password);
+        User.setToken(token);
+        User.setId(id);
+        User.setState(state);
         Toast.makeText(this, name, Toast.LENGTH_SHORT).show();
 
-        if (state) {
-            HttpsConnect.sendRequest(address, "POST", getJsonData(), new HttpsListener() {
+        if (!token.equals("no token")) {
+            Toast.makeText(Main.this, "checking", Toast.LENGTH_SHORT).show();
+            HttpsConnect.sendRequest(check_address, "POST", getCheckJsonData(), new HttpsListener() {
                 @Override
                 public void success(String response) {
-                    catchResponse(response);
+                    catchCheckResponse(response);
                 }
 
                 @Override
@@ -65,16 +80,9 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     exception.printStackTrace();
                 }
             });
-        }// else {
-//            User.setName(name);
-//            User.setAccount(account);
-//            User.setPassword(password);
-//            User.setState(state);
-//        }
-//        User.setName(name);
-//        User.setAccount(account);
-//        User.setPassword(password);
-//        User.setState(state);
+        } else {
+            Toast.makeText(Main.this, "no token", Toast.LENGTH_SHORT).show();
+        }
     }
 
     @Override
@@ -91,6 +99,47 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
             default:
                 break;
         }
+    }
+
+    JSONObject getCheckJsonData() {
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("token", User.getToken());
+            jsonObject.put("id", User.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return jsonObject;
+    }
+
+    private void catchCheckResponse(final String response) {
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    String result = jsonObject.getString("result");
+                    String reason = jsonObject.getString("reason");
+                    if (result.equals("success")) {
+                        if (state) {
+                            HttpsConnect.sendRequest(address, "POST", getJsonData(), new HttpsListener() {
+                                @Override
+                                public void success(String response) {
+                                    catchResponse(response);
+                                }
+
+                                @Override
+                                public void failed(Exception exception) {
+                                    exception.printStackTrace();
+                                }
+                            });
+                        }
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
     }
 
     JSONObject getJsonData() {
@@ -113,7 +162,11 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
                     JSONObject jsonObject = new JSONObject(response);
                     String result = jsonObject.getString("result");
                     String reason = jsonObject.getString("reason");
+                    name = jsonObject.getString("name");
+                    token = jsonObject.getString("token");
+                    id = jsonObject.getString("userId");
                     if (result.compareTo("success") == 0) {
+                        Toast.makeText(Main.this, name, Toast.LENGTH_SHORT).show();
                         item_view.setState(true);
 
 //                        name = jsonObject.getString("name");
@@ -122,14 +175,29 @@ public class Main extends AppCompatActivity implements View.OnClickListener {
 //                        User.setName(name);
 //                        User.setAccount(account);
 //                        User.setPassword(password);
+                        User.setName(User.getName());
                         User.setState(true);
+                        User.setToken(token);
+                        User.setId(id);
 
                         sp = getSharedPreferences(User.getAccount(), Context.MODE_PRIVATE);
                         editor = sp.edit();
                         editor.putString("name", User.getName());
-                        editor.putString("account", User.getAccount());
+//                        editor.putString("account", User.getAccount());
                         editor.putString("password", User.getPassword());
                         editor.putBoolean("state", User.getState());
+                        editor.putString("token", User.getToken());
+                        editor.putString("id", User.getId());
+                        editor.commit();
+
+                        sp = getSharedPreferences("user", Context.MODE_PRIVATE);
+                        editor = sp.edit();
+                        editor.putString("name", User.getName());
+//                        editor.putString("account", User.getAccount());
+                        editor.putString("password", User.getPassword());
+                        editor.putBoolean("state", User.getState());
+                        editor.putString("token", User.getToken());
+                        editor.putString("id", User.getId());
                         editor.commit();
                     }
                 } catch (Exception e) {

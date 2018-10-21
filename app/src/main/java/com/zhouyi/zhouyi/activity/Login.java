@@ -117,7 +117,9 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                     JSONObject jsonObject = new JSONObject(response);
                     String result = jsonObject.getString("result");
                     String reason = jsonObject.getString("reason");
-                    Toast.makeText(Login.this, result + "\n" + reason, Toast.LENGTH_SHORT).show();
+                    String token = jsonObject.getString("token");
+                    String id = jsonObject.getString("userId");
+                    Toast.makeText(Login.this, response, Toast.LENGTH_SHORT).show();
                     if (result.compareTo("success") == 0) {
 //                        name = jsonObject.getString("name");
 //                        account = jsonObject.getString("phone");
@@ -128,6 +130,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         User.setName(name);
                         User.setPassword(password);
                         User.setState(true);
+                        User.setToken(token);
+                        User.setId(id);
 
                         sp = getSharedPreferences(User.getAccount(), Context.MODE_PRIVATE);
                         editor = sp.edit();
@@ -135,6 +139,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         editor.putString("account", User.getAccount());
                         editor.putString("password", User.getPassword());
                         editor.putBoolean("state", User.getState());
+                        editor.putString("token", User.getToken());
+                        editor.putString("id", User.getId());
                         editor.commit();
 
                         sp = getSharedPreferences("user", Context.MODE_PRIVATE);
@@ -143,6 +149,8 @@ public class Login extends AppCompatActivity implements View.OnClickListener {
                         editor.putString("account", User.getAccount());
                         editor.putString("password", User.getPassword());
                         editor.putBoolean("state", User.getState());
+                        editor.putString("token", User.getToken());
+                        editor.putString("id", User.getId());
                         editor.commit();
                         finish();
                     }
