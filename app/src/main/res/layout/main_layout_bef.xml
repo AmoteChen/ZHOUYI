@@ -62,7 +62,7 @@
         zsg:show_bottomline="true"
         zsg:show_login="false"
         zsg:show_leftimg="@drawable/shoucang"
-        zsg:show_text="我的收藏"
+        zsg:show_text="个人信息"
         />
     <com.zhouyi.zhouyi.activity.mine.item_view
         android:layout_width="match_parent"

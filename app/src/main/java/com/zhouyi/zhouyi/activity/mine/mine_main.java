@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.resource.bitmap.CenterCrop;
 import com.zhouyi.zhouyi.R;
+import com.zhouyi.zhouyi.activity.History;
 import com.zhouyi.zhouyi.activity.Login;
 import com.zhouyi.zhouyi.activity.Register;
 
@@ -42,7 +43,9 @@ public class mine_main extends AppCompatActivity {
                 .into(avatarImageView);
     }
     public void onLike(View view){
-        Toast.makeText(mine_main.this,"LIKE!!!",Toast.LENGTH_LONG).show();
+        Intent toInfo=new Intent(this,info_main.class);
+        startActivity(toInfo);
+
 
     }
 
@@ -52,7 +55,8 @@ public class mine_main extends AppCompatActivity {
     }
 
     public void onHistory(View view){
-        Toast.makeText(mine_main.this,"HISTORY!!!",Toast.LENGTH_LONG).show();
+        Intent toHistory=new Intent(this, History.class);
+        startActivity(toHistory);
 
     }
     public void onRefresh(View view){
@@ -64,7 +68,9 @@ public class mine_main extends AppCompatActivity {
     }
 
     public void onAvatar (View view){
-        item_view.changeState();
+//        //后期需删除这个逻辑，根据实际判断
+//        item_view.changeState();
+
         Intent toLogin=new Intent(this, Login.class);
         startActivity(toLogin);
 //        reStartActivity();

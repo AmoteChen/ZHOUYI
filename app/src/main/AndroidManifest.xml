@@ -2,6 +2,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.zhouyi.zhouyi">
 
+    <uses-permission android:name="android.permission.INTERNET"/>
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -21,6 +23,7 @@
         <activity android:name=".activity.mine.mine_main" />
         <activity android:name=".activity.DivinationInfo" />
         <activity android:name=".activity.History"></activity>
+        <activity android:name=".activity.mine.info_main"></activity>
     </application>
 
 </manifest>

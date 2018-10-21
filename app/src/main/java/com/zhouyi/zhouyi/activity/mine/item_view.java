@@ -55,6 +55,10 @@ public class item_view extends LinearLayout {
         item_view.LOGIN = true;
     }
 
+    public static void setState(boolean state) {
+        item_view.LOGIN = state;
+    }
+
     private void initview() {
         if(LOGIN||islogin){
             this.setVisibility(View.VISIBLE);
